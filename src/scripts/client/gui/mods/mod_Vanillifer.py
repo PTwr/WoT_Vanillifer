@@ -31,6 +31,7 @@ def rgbToColorInt(rgbString):
   if rgbString == None or str.isspace(rgbString):
     return None    
   rgb = rgbString.split(';')[0] #ignore inline comment
+  rgb = rgb.strip()
   rgb = rgb.split()
   if not len(rgb) == 4:
     return None
