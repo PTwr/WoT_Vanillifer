@@ -15,8 +15,13 @@ from items.components import path_builder
 
 from helpers.server_settings import ServerSettings
 
+from gui.doc_loaders import badges_loader
+
 _logger = logging.getLogger(__name__)
 _logger.info('Vanilifer')
+
+def _readBadges_disabled():
+  return {}
 
 def isDogTagEnabled_AlwaysDisabled(self):
     return False
@@ -90,6 +95,8 @@ elif os.path.isfile(localConfigFile):
 sections = config.sections()
 if not 'dogtags' in sections:
   config.add_section('dogtags')
+if not 'badges' in sections:
+  config.add_section('badges')
 if not 'modelOverrides' in sections:
   config.add_section('modelOverrides')
 if not 'camouflageOverrides' in sections:
@@ -111,6 +118,10 @@ if not 'originalPaints' in sections:
 if config.has_option('dogtags', 'disable') and config.get('dogtags', 'disable').lower() == "true":
   _logger.info('Disabling dogtags')
   ServerSettings.isDogTagEnabled = isDogTagEnabled_AlwaysDisabled
+  
+if config.has_option('badges', 'disable') and config.get('badges', 'disable').lower() == "true":
+  _logger.info('Disabling badges')
+  badges_loader._readBadges = _readBadges_disabled
 
 if config.has_option('paintOverrides', 'default'):
   defaultPaint = config.get('paintOverrides', 'default') 
