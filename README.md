@@ -14,7 +14,7 @@ Vanillifer is written to survive multiple game updates, and will be further impr
 Most of the time you'll be able to just copy it to new mod directory after update without waiting for new release.
 
 # Releases
-Releases will be published on GitHub in this repository, and on (WGMods)[https://wgmods.net] under [PTwr of NA server](https://worldoftanks.com/en/community/accounts/1000608918-PTwr/) [WGMods account](https://wgmods.net/search/?owner=318781).
+Releases will be published on GitHub in this repository, and on [official WGMods portal](https://wgmods.net) under [PTwr of NA server](https://worldoftanks.com/en/community/accounts/1000608918-PTwr/) [WGMods account](https://wgmods.net/search/?owner=318781).
 
 Checksums will be attached to release notes
 
