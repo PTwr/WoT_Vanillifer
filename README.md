@@ -1,5 +1,10 @@
-# WoT_Vanillifer
-Undoing bad decisions by WG one feature at a time
+# Vanillifer
+
+Vanillifer goal is to make game more vanilla than in its unmodded state.
+
+Vanillifer does not add any new features to game. It only undoes several new features that are not required for game, and might be considered as an eyesore by many players.
+
+Vanillifer is created with update-resilency in mind. It should survive multiple updates without much attention from user.
 
 Vanillifer contains
   - DogSpam - dog tag removal tool - previously released as [DogSpam](https://wgmods.net/5117)
@@ -12,6 +17,8 @@ Vanillifer contains
 Vanillifer is written to survive multiple game updates, and will be further improved in that manner.
 
 Most of the time you'll be able to just copy it to new mod directory after update without waiting for new release.
+
+As a side effect it has **no** user interface, nor any integration with game UI, as those are the things that break after even minor updates.
 
 # Releases
 Releases will be published on GitHub in this repository, and on [official WGMods portal](https://wgmods.net) under [PTwr of NA server](https://worldoftanks.com/en/community/accounts/1000608918-PTwr/) [WGMods account](https://wgmods.net/search/?owner=318781).
