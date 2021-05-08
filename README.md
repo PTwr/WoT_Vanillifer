@@ -133,10 +133,10 @@ Values will be updated every time game is launched, it will always contain up-to
 disable = true
 
 [modelOverrides]
-A117_T26E5_PATRIOT = A117_T26E5
-CH01_TYPE59_GOLD = CH01_TYPE59
-CH41_WZ_111_QL = CH41_WZ_111_5A
-F74_AMX_M4_1949_LIBERTE = F74_AMX_M4_1949
+A117_T26E5_Patriot = A117_T26E5
+Ch01_Type59_Gold = Ch01_Type59
+Ch41_WZ_111_QL = Ch41_WZ_111_5A
+F74_AMX_M4_1949_Liberte = F74_AMX_M4_1949
 
 [paintOverrides]
 default = 79 73 52 255; Applied to all paints without specified override
