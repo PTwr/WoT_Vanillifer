@@ -2,8 +2,8 @@
 Undoing bad decisions by WG one feature at a time
 
 Vanillifer contains
-  - DogSpam - dog tag removal tool - previously released as (DogSpam)[https://wgmods.net/5117]
-  - NoPaints - eyesore paint removal tool previously released as (Tonned Down Paints)[https://wgmods.net/2809], (NoPaints (Polish))[https://wgmods.net/3272], (NoPaints (Sweedish))[https://wgmods.net/4825]
+  - DogSpam - dog tag removal tool - previously released as [DogSpam](https://wgmods.net/5117)
+  - NoPaints - eyesore paint removal tool previously released as [Tonned Down Paints](https://wgmods.net/2809), [NoPaints (Polish)](https://wgmods.net/3272), [NoPaints (Sweedish)](https://wgmods.net/4825)
   - NoStyles - eyesore style removal tool, including 3D styles
   - NoCamouflages - eyesore camouflage removal tool
   - Deskinner - tool to change skinned-clone tank to its unskinned version ([Type 59 Gold non gold](https://wgmods.net/4208) or [WZ-111 QL "Kirin" non gold](https://wgmods.net/5470))
@@ -14,7 +14,7 @@ Vanillifer is written to survive multiple game updates, and will be further impr
 Most of the time you'll be able to just copy it to new mod directory after update without waiting for new release.
 
 # Releases
-Releases will be published on GitHub in this repository, and on (WGMods)[https://wgmods.net] under (PTwr of NA server)[https://worldoftanks.com/en/community/accounts/1000608918-PTwr/] (WGMods account)[https://wgmods.net/search/?owner=318781].
+Releases will be published on GitHub in this repository, and on (WGMods)[https://wgmods.net] under [PTwr of NA server](https://worldoftanks.com/en/community/accounts/1000608918-PTwr/) [WGMods account](https://wgmods.net/search/?owner=318781).
 
 Checksums will be attached to release notes
 
