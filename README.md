@@ -1,5 +1,4 @@
 # WoT_Vanillifer
-Undoing bad decisions by WG one feature at a time
 
 Vanillifer contains
   - DogSpam - dog tag removal tool - previously released as [DogSpam](https://wgmods.net/5117)
