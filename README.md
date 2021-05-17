@@ -49,6 +49,13 @@ Settings for dogtag removal tool.
 Fields:
   - ```disable```, disables dogtags when set to ```true```
 
+### [badges]
+
+Settings for badges removal tool.
+
+Fields:
+  - ```disable```, disables badges when set to ```true```
+
 ### [modelOverrides]
 
 Settings for visual model replacing tool.
