@@ -70,6 +70,19 @@ Fields:
 
 RGBA format is in floats, not ints, so range is from 0 to 1 rather than 0 to 255. To translate 0-255 value to float, just divide it by 255. To convert float->int represnetation, just multiply by 255 and round to whole numbers.
 
+For default color blind silhuette colors config section will look as follows:
+```ini
+[silhouetteColors]
+mode = colorBlind
+self = 0.5 0.5 0.5 1
+enemy = 0.511 0.472 0.992 1
+friend = 0.488 0.839 0.023 1
+flag = 1 1 1 1
+hangar = 0.992 0.780 0.259 1
+```
+
+Simply add it to config file and tweak to match your eyesight.
+
 ### [modelOverrides]
 
 Settings for visual model replacing tool.
