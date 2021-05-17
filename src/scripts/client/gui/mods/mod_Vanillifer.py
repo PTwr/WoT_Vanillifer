@@ -17,8 +17,41 @@ from helpers.server_settings import ServerSettings
 
 from gui.doc_loaders import badges_loader
 
+from helpers import EdgeDetectColorController
+import Math
+
 _logger = logging.getLogger(__name__)
-_logger.info('Vanilifer')
+_logger.info('Vanilifer v1.2.0')
+
+def TryGetConfigValue(section, field):
+  if config.has_option(section, field):
+    return config.get(section, field)
+  return None
+
+def SetSilhuetteColor(mode, category, value):
+  if value == None or value == '':
+    return
+  color = value.split()
+  #color = map(str.strip(), color)
+  color = map(float, color)
+  color = Math.Vector4(color[0], color[1], color[2], color[3])
+  EdgeDetectColorController.g_instance._EdgeDetectColorController__colors[mode][category] = color
+
+def OverrideSilhouetteColors():
+  silhouetteColors = 'silhouetteColors'
+  mode = (TryGetConfigValue(silhouetteColors, 'mode') or '').lower()
+
+  Self, Enemy, Friend, Flag, Hangar = TryGetConfigValue(silhouetteColors, 'self'),TryGetConfigValue(silhouetteColors, 'enemy'),TryGetConfigValue(silhouetteColors, 'friend'),TryGetConfigValue(silhouetteColors, 'flag'),TryGetConfigValue(silhouetteColors, 'hangar'),
+
+  if mode == 'common' or mode == 'colorBlind':
+    SetSilhuetteColor(mode, 'self', Self)
+    SetSilhuetteColor(mode, 'enemy', Enemy)
+    SetSilhuetteColor(mode, 'friend', Friend)
+    SetSilhuetteColor(mode, 'flag', Flag)
+    SetSilhuetteColor(mode, 'hangar', Hangar)
+
+  EdgeDetectColorController.g_instance.updateColors()
+
 
 def _readBadges_disabled():
   return {}
@@ -93,6 +126,8 @@ elif os.path.isfile(localConfigFile):
   config.read(localConfigFile)
 
 sections = config.sections()
+if not 'silhouetteColors' in sections:
+  config.add_section('silhouetteColors')
 if not 'dogtags' in sections:
   config.add_section('dogtags')
 if not 'badges' in sections:
@@ -232,6 +267,8 @@ for key, value in vehicles.g_cache.customization20().paints.iteritems():
   
   if not paintOverride == None:
     value.color = paintOverride
+
+OverrideSilhouetteColors()
 
 with open(configFile, 'w') as updatedConfig:
   _logger.info('Writing Vanillifer config to '+configFile)
