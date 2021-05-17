@@ -56,6 +56,20 @@ Settings for badges removal tool.
 Fields:
   - ```disable```, disables badges when set to ```true```
 
+### [silhouetteColors]
+
+Settings for overriding default silhuette colors (that glowing highlight when you aim at tanks)
+
+Fields:
+  - ```mode```: switches betwen overriding ```common``` (default) and ```colorBlind``` (for when you enabled Color Blind mode in game settigs). Anything else will disable this feature
+  - ```self```: silhuette color of your own tank, that gray border when there is junk between tank and camera. Value is in RGBA format, eg. ```0.5 0.5 0.5 1```
+  - ```enemy```: silhuette color of tanks on enemy team. Value is in RGBA format, eg. ```1.0 0.070 0.027 1```
+  - ```friend```: silhuette color of tanks on your team. Value is in RGBA format, eg. ```0.488 0.839 0.023 1```
+  - ```flag```: silhuette color of flag pole. Value is in RGBA format, eg. ```1 1 1 1```
+  - ```hangar```: silhuette color of promo tanks in garage. Value is in RGBA format, eg. ```0.992 0.780 0.259 1```
+
+RGBA format is in floats, not ints, so range is from 0 to 1 rather than 0 to 255. To translate 0-255 value to float, just divide it by 255. To convert float->int represnetation, just multiply by 255 and round to whole numbers.
+
 ### [modelOverrides]
 
 Settings for visual model replacing tool.
