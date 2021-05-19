@@ -52,9 +52,12 @@ def OverrideSilhouetteColors():
 
   EdgeDetectColorController.g_instance.updateColors()
 
-
+_readBadges_disabled_original = badges_loader._readBadges
 def _readBadges_disabled():
-  return {}
+  result = _readBadges_disabled_original()
+  # allow bot badge
+  result = dict((k, v) for (k, v) in result.iteritems() if v['name'] == 'ai_bot')
+  return result
 
 def isDogTagEnabled_AlwaysDisabled(self):
     return False
