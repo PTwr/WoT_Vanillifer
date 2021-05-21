@@ -20,8 +20,71 @@ from gui.doc_loaders import badges_loader
 from helpers import EdgeDetectColorController
 import Math
 
+
 _logger = logging.getLogger(__name__)
-_logger.info('Vanilifer v1.2.0')
+_logger.info('Vanillifer v1.2.3')
+
+from gui.marathon.marathon_event_controller import MarathonEventsController
+from gui.impl.lobby.marathon.marathon_entry_point import MarathonEntryPoint
+from gui.impl.lobby.marathon.marathon_entry_point import isMarathonEntryPointAvailable
+from gui.Scaleform.daapi.view.lobby.marathon.marathon_entry_point import MarathonEntryPointWrapper
+#from gui.Scaleform.genConsts.HANGAR_ALIASES import HANGAR_ALIASES
+
+
+def doNotShow(self):
+  _logger.info('doNotShow')
+  self.proxy.hide()
+  pass
+  
+from frameworks.wulf import ViewFlags
+def disabled_makeInjectView(self):
+  _logger.info('disabled_makeInjectView')
+  self._MarathonEntryPointWrapper__view = MarathonEntryPoint(flags=0)
+  return self._MarathonEntryPointWrapper__view
+MarathonEntryPointWrapper._makeInjectView = disabled_makeInjectView
+
+from gui.sounds.filters import WWISEMarathonPageFilter
+
+def start_empty(self):
+  _logger.info('start_empty')
+  pass
+
+WWISEMarathonPageFilter.start = start_empty
+
+#from gui.marathon import marathon_event_controller
+def onLobbyStarted_disabled(self, ctx):
+    _logger.info('onLobbyStarted_disabled')
+    #super(MarathonEventsController, self).onLobbyStarted(ctx)
+    #self._eventsCache.onSyncCompleted += self.__onSyncCompleted
+    #self._eventsCache.onProgressUpdated += self.__onSyncCompleted
+    #if self.app and self.app.loaderManager:
+    #    self.app.loaderManager.onViewLoaded += self.__onViewLoaded
+    self._MarathonEventsController__onSyncCompleted()
+
+MarathonEventsController.onLobbyStarted = onLobbyStarted_disabled
+
+from gui.shared import event_dispatcher 
+
+_logger.info('showMarathonVehiclePreview')
+def showMarathonVehiclePreview_bleh(vehTypeCompDescr, itemsPack=None, title='', marathonPrefix=''):
+    _logger.info('showMarathonVehiclePreview_bleh')
+    g_eventBus.handleEvent(events.LoadViewEvent(SFViewLoadParams(VIEW_ALIAS.MARATHON_VEHICLE_PREVIEW), ctx={'itemCD': vehTypeCompDescr,
+     'itemsPack': itemsPack,
+     'title': 'penis',
+     'marathonPrefix': 'PE'}), scope=EVENT_BUS_SCOPE.LOBBY)
+
+event_dispatcher.showMarathonVehiclePreview = showMarathonVehiclePreview_bleh
+
+def showProgressiveRewardAwardWindow_disabled(bonuses, specialRewardType, currentStep, notificationMgr=None):
+  _logger.info('showProgressiveRewardAwardWindow_disabled')
+  pass
+def showProgressiveRewardWindow_disabled(bonuses, specialRewardType, currentStep, notificationMgr=None):
+  _logger.info('showProgressiveRewardWindow_disabled')
+  pass
+
+event_dispatcher.showProgressiveRewardAwardWindow = showProgressiveRewardAwardWindow_disabled
+event_dispatcher.showProgressiveRewardWindow = showProgressiveRewardWindow_disabled
+
 
 def TryGetConfigValue(section, field):
   if config.has_option(section, field):
