@@ -4,3 +4,4 @@
 
 /.vs
 /src/scripts/client/gui/mods/mod_Vanillifer.pyc
+*.pyc

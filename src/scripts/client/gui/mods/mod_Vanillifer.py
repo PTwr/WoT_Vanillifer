@@ -6,7 +6,6 @@ import BigWorld
 from helpers import getFullClientVersion, getShortClientVersion, getClientVersion
 
 import importlib
-import ResMgr
 import string
 from items.components.shared_components import ModelStatesPaths
 
@@ -20,60 +19,17 @@ from gui.doc_loaders import badges_loader
 from helpers import EdgeDetectColorController
 import Math
 
-
 _logger = logging.getLogger(__name__)
-_logger.info('Vanillifer v1.2.3')
+_logger.info('Vanillifer v1.2.2')
 
-from gui.marathon.marathon_event_controller import MarathonEventsController
-from gui.impl.lobby.marathon.marathon_entry_point import MarathonEntryPoint
-from gui.impl.lobby.marathon.marathon_entry_point import isMarathonEntryPointAvailable
-from gui.Scaleform.daapi.view.lobby.marathon.marathon_entry_point import MarathonEntryPointWrapper
-#from gui.Scaleform.genConsts.HANGAR_ALIASES import HANGAR_ALIASES
+from mod_Vanillifer_Config import VanilliferConfig
+from mod_Vanillifer_Marathon import VanillifyMarathon
 
+config = VanilliferConfig(_logger)
 
-def doNotShow(self):
-  _logger.info('doNotShow')
-  self.proxy.hide()
-  pass
-  
-from frameworks.wulf import ViewFlags
-def disabled_makeInjectView(self):
-  _logger.info('disabled_makeInjectView')
-  self._MarathonEntryPointWrapper__view = MarathonEntryPoint(flags=0)
-  return self._MarathonEntryPointWrapper__view
-MarathonEntryPointWrapper._makeInjectView = disabled_makeInjectView
-
-from gui.sounds.filters import WWISEMarathonPageFilter
-
-def start_empty(self):
-  _logger.info('start_empty')
-  pass
-
-WWISEMarathonPageFilter.start = start_empty
-
-#from gui.marathon import marathon_event_controller
-def onLobbyStarted_disabled(self, ctx):
-    _logger.info('onLobbyStarted_disabled')
-    #super(MarathonEventsController, self).onLobbyStarted(ctx)
-    #self._eventsCache.onSyncCompleted += self.__onSyncCompleted
-    #self._eventsCache.onProgressUpdated += self.__onSyncCompleted
-    #if self.app and self.app.loaderManager:
-    #    self.app.loaderManager.onViewLoaded += self.__onViewLoaded
-    self._MarathonEventsController__onSyncCompleted()
-
-MarathonEventsController.onLobbyStarted = onLobbyStarted_disabled
+VanillifyMarathon(_logger, config.disableMarathonAdvertBox(), config.disableMarathonBackgroundMusic())
 
 from gui.shared import event_dispatcher 
-
-_logger.info('showMarathonVehiclePreview')
-def showMarathonVehiclePreview_bleh(vehTypeCompDescr, itemsPack=None, title='', marathonPrefix=''):
-    _logger.info('showMarathonVehiclePreview_bleh')
-    g_eventBus.handleEvent(events.LoadViewEvent(SFViewLoadParams(VIEW_ALIAS.MARATHON_VEHICLE_PREVIEW), ctx={'itemCD': vehTypeCompDescr,
-     'itemsPack': itemsPack,
-     'title': 'penis',
-     'marathonPrefix': 'PE'}), scope=EVENT_BUS_SCOPE.LOBBY)
-
-event_dispatcher.showMarathonVehiclePreview = showMarathonVehiclePreview_bleh
 
 def showProgressiveRewardAwardWindow_disabled(bonuses, specialRewardType, currentStep, notificationMgr=None):
   _logger.info('showProgressiveRewardAwardWindow_disabled')
@@ -82,14 +38,9 @@ def showProgressiveRewardWindow_disabled(bonuses, specialRewardType, currentStep
   _logger.info('showProgressiveRewardWindow_disabled')
   pass
 
-event_dispatcher.showProgressiveRewardAwardWindow = showProgressiveRewardAwardWindow_disabled
-event_dispatcher.showProgressiveRewardWindow = showProgressiveRewardWindow_disabled
-
-
-def TryGetConfigValue(section, field):
-  if config.has_option(section, field):
-    return config.get(section, field)
-  return None
+#not working
+#event_dispatcher.showProgressiveRewardAwardWindow = showProgressiveRewardAwardWindow_disabled
+#event_dispatcher.showProgressiveRewardWindow = showProgressiveRewardWindow_disabled
 
 def SetSilhuetteColor(mode, category, value):
   if value == None or value == '':
@@ -102,9 +53,9 @@ def SetSilhuetteColor(mode, category, value):
 
 def OverrideSilhouetteColors():
   silhouetteColors = 'silhouetteColors'
-  mode = (TryGetConfigValue(silhouetteColors, 'mode') or '').lower()
+  mode = (config.tryGetValue(silhouetteColors, 'mode') or '').lower()
 
-  Self, Enemy, Friend, Flag, Hangar = TryGetConfigValue(silhouetteColors, 'self'),TryGetConfigValue(silhouetteColors, 'enemy'),TryGetConfigValue(silhouetteColors, 'friend'),TryGetConfigValue(silhouetteColors, 'flag'),TryGetConfigValue(silhouetteColors, 'hangar'),
+  Self, Enemy, Friend, Flag, Hangar = config.tryGetValue(silhouetteColors, 'self'),config.tryGetValue(silhouetteColors, 'enemy'),config.tryGetValue(silhouetteColors, 'friend'),config.tryGetValue(silhouetteColors, 'flag'),config.tryGetValue(silhouetteColors, 'hangar'),
 
   if mode == 'common' or mode == 'colorBlind':
     SetSilhuetteColor(mode, 'self', Self)
@@ -124,15 +75,9 @@ def _readBadges_disabled():
 
 def isDogTagEnabled_AlwaysDisabled(self):
     return False
-def GetModsDirectory():
-  paths = '../paths.xml'
-  paths = ResMgr.openSection(paths)
-  moddir = os.path.join(os.getcwd(), paths['Paths'].values()[1].readString(''))
-  moddir = moddir.replace('\\./','\\')
-  return moddir
   
 def rgbToColorInt(rgbString):
-  if rgbString == None or str.isspace(rgbString):
+  if not rgbString or str.isspace(rgbString):
     return None    
   rgb = rgbString.split(';')[0] #ignore inline comment
   rgb = rgb.strip()
@@ -144,11 +89,8 @@ def rgbToColorInt(rgbString):
   return color
 
 def getPaintOverride(config, paintId):
-  paintId = str(paintId)
-  if config.has_option('paintOverrides', paintId):
-    return rgbToColorInt(config.get('paintOverrides', paintId))
-  else:
-    return rgbToColorInt(defaultPaint)
+    paintId = str(paintId)
+    return rgbToColorInt(config.tryGetValue('paintOverrides', paintId) or defaultPaint)
 
 def SwitchModel(models, current, replacement):
   undamaged = models.undamaged.replace(current, replacement)
@@ -166,97 +108,42 @@ def SwitchTankModels(models, current, replacement):
       turret.models = SwitchModel(turret.models, current, replacement)
       for gun in turret.guns:
         gun.models = SwitchModel(gun.models, current, replacement)
-
-cwd = os.getcwd()
-
-configFileName = 'Vanillifer.ini'
-configDirectory = os.path.join(cwd, 'mods', 'config')
-configFile = os.path.join(configDirectory, configFileName)
-localConfigFile = os.path.join(GetModsDirectory(), configFileName)
-try: 
-    os.makedirs(configDirectory)
-except OSError:
-    if not os.path.isdir(configDirectory):
-        raise
-
-config = ConfigParser()
-config.optionxform=str
-
-#prioritize config outside of versioned directory
-if os.path.isfile(configFile):
-  _logger.info('Reading Vanillifer config from '+configFile)
-  config.read(configFile)
-#try to load bundled config if no global present
-elif os.path.isfile(localConfigFile):
-  _logger.info('Reading Vanillifer config from '+localConfigFile)
-  config.read(localConfigFile)
-
-sections = config.sections()
-if not 'silhouetteColors' in sections:
-  config.add_section('silhouetteColors')
-if not 'dogtags' in sections:
-  config.add_section('dogtags')
-if not 'badges' in sections:
-  config.add_section('badges')
-if not 'modelOverrides' in sections:
-  config.add_section('modelOverrides')
-if not 'camouflageOverrides' in sections:
-  config.add_section('camouflageOverrides')
-if not 'styleOverrides' in sections:
-  config.add_section('styleOverrides')
-if not 'paintOverrides' in sections:
-  config.add_section('paintOverrides')
   
-if not 'originalModels' in sections:
-  config.add_section('originalModels')
-if not 'originalCamouflages' in sections:
-  config.add_section('originalCamouflages')
-if not 'originalStyles' in sections:
-  config.add_section('originalStyles')
-if not 'originalPaints' in sections:
-  config.add_section('originalPaints')
-  
-if config.has_option('dogtags', 'disable') and config.get('dogtags', 'disable').lower() == "true":
+if config.disableDogTags:
   _logger.info('Disabling dogtags')
   ServerSettings.isDogTagEnabled = isDogTagEnabled_AlwaysDisabled
   
-if config.has_option('badges', 'disable') and config.get('badges', 'disable').lower() == "true":
+if config.disableBadges:
   _logger.info('Disabling badges')
   badges_loader._readBadges = _readBadges_disabled
 
-if config.has_option('paintOverrides', 'default'):
-  defaultPaint = config.get('paintOverrides', 'default') 
-else:
-  config.set('paintOverrides', 'default', ';If specified its applied to all paints without specified override')
-  defaultPaint = None
+defaultPaint = config.tryGetValue('paintOverrides', 'default', ';If specified its applied to all paints without specified override')
 
 for nationName in nations.NAMES:
   nationId = nations.NAMES.index(nationName)
   for vehicleId in vehicles.g_list.getList(nationId):
     vehicle = vehicles.g_cache.vehicle(nationId, vehicleId)
     vehicleName = vehicle.name.replace(' = ', ':').split(':')[1]
-    config.set('originalModels', vehicleName, vehicle.userString)
+    config.setValue('originalModels', vehicleName, vehicle.userString)
     
-    if config.has_option('modelOverrides', vehicleName):
-      replacement = config.get('modelOverrides', vehicleName)
-      replacement = replacement.split(';')[0].strip() #ignore inline comment
-      replacement = replacement.strip() #trim whitespace
+    replacement = config.tryGetValue('modelOverrides', vehicleName)
+    if replacement:
       _logger.info('Replacing '+vehicleName+' with '+ replacement)
       _logger.info('vehicleId: '+str(vehicleId)+' nationId: '+str(nationId))
       SwitchTankModels(vehicle, vehicleName, replacement)
   
-defaultCamo = None
-if config.has_option('camouflageOverrides', 'default'):
+defaultCamo = config.tryGetValue('camouflageOverrides', 'default')
+if defaultCamo:
   try:
-    defaultCamo = int(config.get('camouflageOverrides', 'default'))
+    defaultCamo = int(defaultCamo)
   except:
     _logger.error('Default for camouflageOverrides must be integer value')
     defaultCamo = None
     
-defaultStyle = None
-if config.has_option('styleOverrides', 'default'):
+defaultStyle = config.tryGetValue('styleOverrides', 'default')
+if defaultStyle:
   try:
-    defaultStyle = int(config.get('styleOverrides', 'default'))
+    defaultStyle = int(defaultStyle)
   except:
     _logger.error('Default for styleOverrides must be integer value')
     defaultStyle = None
@@ -265,17 +152,14 @@ if config.has_option('styleOverrides', 'default'):
 transparentCamouflage = vehicles.g_cache.customization20().camouflages[1]
 camoKeys = vehicles.g_cache.customization20().camouflages.keys()
 for key in camoKeys:
-  config.set('originalCamouflages', str(key), vehicles.g_cache.customization20().camouflages[key].userString)
+  config.setValue('originalCamouflages', str(key), vehicles.g_cache.customization20().camouflages[key].userString)
   
-  override = None
-  if config.has_option('camouflageOverrides', str(key)):
+  override = config.tryGetValue('camouflageOverrides', str(key))
+  if override:
     try:
-      s = config.get('camouflageOverrides', str(key))
-      s = s.split(';')[0].strip()
-      if s.lower() == 'allow':
+      if override.lower() == 'allow':
         continue
-      override = int(s)
-      override = int(config.get('camouflageOverrides', str(key)))
+      override = int(override)
     except:
       _logger.error('camouflageOverrides for #' + str(key) + ' must be integer value')
       override = None
@@ -290,16 +174,14 @@ for key in camoKeys:
   
 _logger.info('styles')
 for value in vehicles.g_cache.customization20().styles.itervalues():
-  config.set('originalStyles', str(value.id), value.userString)
+  config.setValue('originalStyles', str(value.id), value.userString)
   
-  override = None
-  if config.has_option('styleOverrides', str(value.id)):
+  override = config.tryGetValue('styleOverrides', str(value.id))
+  if override:
     try:
-      s = config.get('styleOverrides', str(value.id))
-      s = s.split(';')[0].strip()
-      if s.lower() == 'allow':
+      if override.lower() == 'allow':
         continue
-      override = int(s)
+      override = int(override)
     except:
       _logger.error('styleOverrides for #' + str(value.id) + ' must be integer value')
       override = None
@@ -329,13 +211,10 @@ for key, value in vehicles.g_cache.customization20().paints.iteritems():
   
   originalColorStr = [value.color & 255, value.color >> 8 & 255, value.color >> 16 & 255, value.color >> 24 & 255]
   originalColorStr = ' '.join(str(n) for n in originalColorStr)
-  config.set('originalPaints', str(key), str(originalColorStr) + ';' +value.userString)
+  config.setValue('originalPaints', str(key), str(originalColorStr) + ';' +value.userString)
   
   if not paintOverride == None:
     value.color = paintOverride
 
 OverrideSilhouetteColors()
 
-with open(configFile, 'w') as updatedConfig:
-  _logger.info('Writing Vanillifer config to '+configFile)
-  config.write(updatedConfig)
