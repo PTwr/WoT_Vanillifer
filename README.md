@@ -42,6 +42,22 @@ This allows mod to be shipped with default settings without risk of user losing 
 
 ## Config Sections
 
+### [marathon]
+
+Settings to cleanup mess made by Marathon events.
+
+Fields
+ - ```hideAdvert```: removes advert box from garage screen when set to ```true``` (flag on top will remain)
+ - ```disableMusic```: disables background music in Marathon screen
+
+Example:
+
+```ini
+[marathon]
+hideAdvert = true
+disableMusic = true
+```
+
 ### [dogtags]
 
 Settings for dogtag removal tool.
