@@ -5,6 +5,8 @@ from ConfigParser import ConfigParser
 import ResMgr
 import os
 
+from mod_Vanillifer_Config_Default import applyDefaultConfig
+
 def GetModsDirectory():
   paths = '../paths.xml'
   paths = ResMgr.openSection(paths)
@@ -36,6 +38,8 @@ class VanilliferConfig():
         elif os.path.isfile(localConfigFile):
             self._logger.info('Reading Vanillifer config from ' + localConfigFile)
             self.config.read(localConfigFile)
+        else:
+            applyDefaultConfig(self._logger, self)
 
     def prepareFile(self):
         cwd = os.getcwd()
@@ -72,12 +76,13 @@ class VanilliferConfig():
         self.ensureSectionExists('originalPaints')
 
     def boolValue(self, section, field):
-      return self.config.has_option(section, field) and self.config.get(section, field).lower() == "true"
-    def tryGetValue(self, section, field, default = None):
+      return self.tryGetValue(section, field, default = 'false').lower() == "true"
+    def tryGetValue(self, section, field, default = None, saveDefault = False):
         if self.config.has_option(section, field):
             result = self.config.get(section, field)
         else:
-            self.setValue(section, field, default)
+            if saveDefault:
+                self.setValue(section, field, default)
             result = default
 
         #ignore nonstandard inline comment

@@ -70,7 +70,7 @@ _readBadges_disabled_original = badges_loader._readBadges
 def _readBadges_disabled():
   result = _readBadges_disabled_original()
   # allow bot badge
-  result = dict((k, v) for (k, v) in result.iteritems() if v['name'] == 'ai_bot')
+  result = dict((k, v) for (k, v) in result.iteritems() if config.tryGetValue('badges', v['name'], default = '').lower() == 'allow')
   return result
 
 def isDogTagEnabled_AlwaysDisabled(self):
@@ -117,7 +117,7 @@ if config.disableBadges:
   _logger.info('Disabling badges')
   badges_loader._readBadges = _readBadges_disabled
 
-defaultPaint = config.tryGetValue('paintOverrides', 'default', ';If specified its applied to all paints without specified override')
+defaultPaint = config.tryGetValue('paintOverrides', 'default', default = ';If specified its applied to all paints without specified override', saveDefault = True)
 
 for nationName in nations.NAMES:
   nationId = nations.NAMES.index(nationName)
@@ -218,3 +218,4 @@ for key, value in vehicles.g_cache.customization20().paints.iteritems():
 
 OverrideSilhouetteColors()
 
+config.saveConfig()
