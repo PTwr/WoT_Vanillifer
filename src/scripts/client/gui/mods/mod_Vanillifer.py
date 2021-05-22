@@ -10,24 +10,28 @@ import string
 from items.components.shared_components import ModelStatesPaths
 
 import nations
-from items.components import path_builder
 
 from helpers.server_settings import ServerSettings
 
-from gui.doc_loaders import badges_loader
-
-from helpers import EdgeDetectColorController
-import Math
-
 _logger = logging.getLogger(__name__)
-_logger.info('Vanillifer v1.2.2')
+_logger.info('Vanillifer v1.2.3 - "Simplicity"')
 
 from mod_Vanillifer_Config import VanilliferConfig
 from mod_Vanillifer_Marathon import VanillifyMarathon
+from mod_Vanillifer_Silhuette import OverrideSilhouetteColors
+from mod_Vanillifer_Badges import DisableBadges
 
 config = VanilliferConfig(_logger)
 
 VanillifyMarathon(_logger, config.disableMarathonAdvertBox(), config.disableMarathonBackgroundMusic())
+
+OverrideSilhouetteColors(_logger, config)
+
+DisableBadges(_logger, config)
+
+config.saveConfig()
+
+#TODO refactor/cleanup everything below
 
 from gui.shared import event_dispatcher 
 
@@ -42,45 +46,14 @@ def showProgressiveRewardWindow_disabled(bonuses, specialRewardType, currentStep
 #event_dispatcher.showProgressiveRewardAwardWindow = showProgressiveRewardAwardWindow_disabled
 #event_dispatcher.showProgressiveRewardWindow = showProgressiveRewardWindow_disabled
 
-def SetSilhuetteColor(mode, category, value):
-  if value == None or value == '':
-    return
-  color = value.split()
-  #color = map(str.strip(), color)
-  color = map(float, color)
-  color = Math.Vector4(color[0], color[1], color[2], color[3])
-  EdgeDetectColorController.g_instance._EdgeDetectColorController__colors[mode][category] = color
 
-def OverrideSilhouetteColors():
-  silhouetteColors = 'silhouetteColors'
-  mode = (config.tryGetValue(silhouetteColors, 'mode') or '').lower()
-
-  Self, Enemy, Friend, Flag, Hangar = config.tryGetValue(silhouetteColors, 'self'),config.tryGetValue(silhouetteColors, 'enemy'),config.tryGetValue(silhouetteColors, 'friend'),config.tryGetValue(silhouetteColors, 'flag'),config.tryGetValue(silhouetteColors, 'hangar'),
-
-  if mode == 'common' or mode == 'colorBlind':
-    SetSilhuetteColor(mode, 'self', Self)
-    SetSilhuetteColor(mode, 'enemy', Enemy)
-    SetSilhuetteColor(mode, 'friend', Friend)
-    SetSilhuetteColor(mode, 'flag', Flag)
-    SetSilhuetteColor(mode, 'hangar', Hangar)
-
-  EdgeDetectColorController.g_instance.updateColors()
-
-_readBadges_disabled_original = badges_loader._readBadges
-def _readBadges_disabled():
-  result = _readBadges_disabled_original()
-  # allow bot badge
-  result = dict((k, v) for (k, v) in result.iteritems() if config.tryGetValue('badges', v['name'], default = '').lower() == 'allow')
-  return result
 
 def isDogTagEnabled_AlwaysDisabled(self):
     return False
   
 def rgbToColorInt(rgbString):
   if not rgbString or str.isspace(rgbString):
-    return None    
-  rgb = rgbString.split(';')[0] #ignore inline comment
-  rgb = rgb.strip()
+    return None
   rgb = rgb.split()
   if not len(rgb) == 4:
     return None
@@ -113,10 +86,6 @@ if config.disableDogTags:
   _logger.info('Disabling dogtags')
   ServerSettings.isDogTagEnabled = isDogTagEnabled_AlwaysDisabled
   
-if config.disableBadges:
-  _logger.info('Disabling badges')
-  badges_loader._readBadges = _readBadges_disabled
-
 defaultPaint = config.tryGetValue('paintOverrides', 'default', default = ';If specified its applied to all paints without specified override', saveDefault = True)
 
 for nationName in nations.NAMES:
@@ -215,7 +184,5 @@ for key, value in vehicles.g_cache.customization20().paints.iteritems():
   
   if not paintOverride == None:
     value.color = paintOverride
-
-OverrideSilhouetteColors()
 
 config.saveConfig()
