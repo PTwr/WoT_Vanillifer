@@ -1,7 +1,6 @@
 import logging
 import BigWorld
 
-from gui.doc_loaders import badges_loader
 
 def DisableBadges(_logger, config):
 
@@ -9,6 +8,9 @@ def DisableBadges(_logger, config):
 		return
 
 	try:
+
+		from gui.doc_loaders import badges_loader
+
 		_readBadges_disabled_original = badges_loader._readBadges
 		def _readBadges_disabled():
 			result = _readBadges_disabled_original()

@@ -6,7 +6,8 @@ def VanillifyMarathon(_logger, advert, music):
 
 	if advert:
 		try:
-
+		
+			from gui.impl.lobby.marathon.marathon_entry_point import MarathonEntryPoint
 			from gui.Scaleform.daapi.view.lobby.marathon.marathon_entry_point import MarathonEntryPointWrapper
   
 			#from frameworks.wulf import ViewFlags #parameter for MarathonEntryPoint flags

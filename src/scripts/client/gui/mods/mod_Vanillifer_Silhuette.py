@@ -1,7 +1,6 @@
 import logging
 import BigWorld
 
-from helpers import EdgeDetectColorController
 import Math
 
 def SetSilhuetteColor(_logger, mode, category, value):
@@ -14,6 +13,9 @@ def SetSilhuetteColor(_logger, mode, category, value):
 
 def OverrideSilhouetteColors(_logger, config):
     try:
+
+        from helpers import EdgeDetectColorController
+
         silhouetteColors = 'silhouetteColors'
         mode = (config.tryGetValue(silhouetteColors, 'mode') or '').lower()
 
