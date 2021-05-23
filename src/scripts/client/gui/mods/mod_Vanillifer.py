@@ -45,4 +45,6 @@ ApplyStyleOverrides(_logger, config)
 
 ApplyModelOverrides(_logger, config)
 
+DisableDogTags(_logger, config)
+
 config.saveConfig()
