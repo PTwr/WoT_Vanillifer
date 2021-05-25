@@ -1,5 +1,7 @@
 # Vanillifer
 
+Mod is approved on WGMods: https://wgmods.net/5550
+
 Vanillifer goal is to make game more vanilla than in its unmodded state.
 
 Vanillifer does not add any new features to game. It only undoes several new features that are not required for game, and might be considered as an eyesore by many players.
@@ -38,6 +40,7 @@ Vanillifer will automatically create config file  [game root]\mods\config\Vanill
 ![image](https://user-images.githubusercontent.com/20748035/117519883-e0bed700-afa5-11eb-8c29-abf90affba21.png)
 
 If config file in mods\config directory is **not** present (eg. first run after installing Vanillifer) but file in mods\[game version] directory is present, Vanillifer will create new config in mods\config based on it.
+If neither are present, default configuration will be loaded [from code](https://github.com/PTwr/WoT_Vanillifer/blob/main/src/scripts/client/gui/mods/mod_Vanillifer_Config_Default.py).
 This allows mod to be shipped with default settings without risk of user losing exising settings.
 
 ## Config Sections
