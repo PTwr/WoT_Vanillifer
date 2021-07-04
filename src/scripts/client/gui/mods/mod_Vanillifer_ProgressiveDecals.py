@@ -3,7 +3,7 @@ import BigWorld
 
 def DisableProgressiveDecalPopups(_logger, config):
 
-    #if not config.disableProgressiveDecalPopups:
+    #if not config.disableProgressiveDecalPopups():
     #	return
 
     try:

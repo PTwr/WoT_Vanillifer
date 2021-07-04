@@ -6,7 +6,7 @@ def isDogTagEnabled_AlwaysDisabled(self):
 
 def DisableDogTags(_logger, config):
 
-	if not config.disableDogTags:
+	if not config.disableDogTags():
 		return
 
 	try:

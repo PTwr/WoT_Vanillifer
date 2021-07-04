@@ -4,7 +4,7 @@ import BigWorld
 
 def DisableBadges(_logger, config):
 
-	if not config.disableBadges:
+	if not config.disableBadges():
 		return
 
 	try:
