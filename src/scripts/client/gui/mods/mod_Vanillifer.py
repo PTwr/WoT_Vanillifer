@@ -14,7 +14,7 @@ import nations
 
 
 _logger = logging.getLogger(__name__)
-_logger.info('Vanillifer v1.2.3 - "Simplicity"')
+_logger.info('Vanillifer v1.2.4 - "Maschinenkanone"')
 
 from mod_Vanillifer_Config import VanilliferConfig
 from mod_Vanillifer_Marathon import VanillifyMarathon
@@ -27,24 +27,37 @@ from mod_Vanillifer_Camouflage import ApplyCamouflageOverrides
 from mod_Vanillifer_Styles import ApplyStyleOverrides
 from mod_Vanillifer_Models import ApplyModelOverrides
 
-config = VanilliferConfig(_logger)
+try:
+	try:
+		config = VanilliferConfig(_logger)
+	except:
+		_logger.error('Failed to load config')
+		raise
+	
+	VanillifyMarathon(_logger, config.disableMarathonAdvertBox(), config.disableMarathonBackgroundMusic())
 
-VanillifyMarathon(_logger, config.disableMarathonAdvertBox(), config.disableMarathonBackgroundMusic())
+	OverrideSilhouetteColors(_logger, config)
 
-OverrideSilhouetteColors(_logger, config)
+	DisableBadges(_logger, config)
 
-DisableBadges(_logger, config)
+	OverridePaints(_logger, config)
 
-OverridePaints(_logger, config)
+	DisableProgressiveDecalPopups(_logger, config)
 
-DisableProgressiveDecalPopups(_logger, config)
+	ApplyCamouflageOverrides(_logger, config)
 
-ApplyCamouflageOverrides(_logger, config)
+	ApplyStyleOverrides(_logger, config)
 
-ApplyStyleOverrides(_logger, config)
+	ApplyModelOverrides(_logger, config)
 
-ApplyModelOverrides(_logger, config)
+	DisableDogTags(_logger, config)
 
-DisableDogTags(_logger, config)
+	try:
+		config.saveConfig()
+	except:
+		_logger.error('Failed to save config')
+		raise
 
-config.saveConfig()
+except Exception as e:
+	_logger.error(e)
+	
