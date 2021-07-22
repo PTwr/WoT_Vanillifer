@@ -45,6 +45,14 @@ This allows mod to be shipped with default settings without risk of user losing 
 
 ## Config Sections
 
+### [adblock]
+
+Settings to remove adverts from garage screen
+
+Fields
+ - ```disable_goldfish```: removes shop offer box (bottom left corner) when set to ```true```, which is by default displayed every 86400 seconds (24 hours) which in practice means on first login of day. "Goldfish" is internal name Wargaming gave to this feature.
+ - ```disable_craftmachine```: removes persistent Clan Wars advert (bottom right corner) when set to ```true```. ```Craftmachine``` is internal name Wargaming gave to "build your tank during campaign" feature.
+
 ### [marathon]
 
 Settings to cleanup mess made by Marathon events.
@@ -191,6 +199,10 @@ Values will be updated every time game is launched, it will always contain up-to
 ```ini
 [dogtags]
 disable = true
+
+[adblock]
+disable_goldfish = true
+disable_craftmachine = true
 
 [modelOverrides]
 A117_T26E5_Patriot = A117_T26E5
