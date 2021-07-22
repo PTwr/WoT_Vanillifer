@@ -1,15 +1,15 @@
 import logging
 import BigWorld
 
-def isTimeToShowGoldFishPromo_AlwaysDisabled(self):
-    return False
-
 def AdBlock(_logger, config):
 
 	if config.disableGoldfish():
 		try:
 	
 			from gui import gold_fish
+
+			def isTimeToShowGoldFishPromo_AlwaysDisabled(self):
+				return False
 
 			gold_fish.isTimeToShowGoldFishPromo = isTimeToShowGoldFishPromo_AlwaysDisabled
 
