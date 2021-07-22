@@ -14,7 +14,7 @@ import nations
 
 
 _logger = logging.getLogger(__name__)
-_logger.info('Vanillifer v1.2.4 - "Maschinenkanone"')
+_logger.info('Vanillifer v1.2.5 - "Thunderstorm"')
 
 from mod_Vanillifer_Config import VanilliferConfig
 from mod_Vanillifer_Marathon import VanillifyMarathon
@@ -26,6 +26,7 @@ from mod_Vanillifer_ProgressiveDecals import DisableProgressiveDecalPopups
 from mod_Vanillifer_Camouflage import ApplyCamouflageOverrides
 from mod_Vanillifer_Styles import ApplyStyleOverrides
 from mod_Vanillifer_Models import ApplyModelOverrides
+from mod_Vanillifer_AdBlock import AdBlock
 
 try:
 	try:
@@ -51,6 +52,8 @@ try:
 	ApplyModelOverrides(_logger, config)
 
 	DisableDogTags(_logger, config)
+
+	AdBlock(_logger, config)
 
 	try:
 		config.saveConfig()

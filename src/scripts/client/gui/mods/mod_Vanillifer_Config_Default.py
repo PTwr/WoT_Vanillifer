@@ -13,6 +13,9 @@ def applyDefaultConfig(_logger, config):
 
     config.setValue('dogtags', 'disable', 'true')
 
+    config.setValue('adblock', 'disable_goldfish', 'true')
+    config.setValue('adblock', 'disable_craftmachine', 'true')
+
     config.setValue('badges', 'disable', 'true')
     config.setValue('badges', 'ai_bot', 'allow')
     

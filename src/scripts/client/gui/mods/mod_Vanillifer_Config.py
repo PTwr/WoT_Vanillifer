@@ -61,6 +61,7 @@ class VanilliferConfig():
         
         self.ensureSectionExists('silhouetteColors')
 
+        self.ensureSectionExists('adblock')
         self.ensureSectionExists('dogtags')
         self.ensureSectionExists('badges')
         self.ensureSectionExists('marathon')
@@ -108,6 +109,11 @@ class VanilliferConfig():
         return self.boolValue('dogtags', 'disable')
     def disableBadges(self):
         return self.boolValue('badges', 'disable')
+
+    def disableGoldfish(self):
+        return self.boolValue('adblock', 'disable_goldfish')
+    def disableCraftmachine(self):
+        return self.boolValue('adblock', 'disable_craftmachine')
 
     def saveConfig(self):
         with open(self.configFile, 'w') as updatedConfig:
