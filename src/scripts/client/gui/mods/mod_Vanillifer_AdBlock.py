@@ -27,17 +27,6 @@ def AdBlock(_logger, config):
 
 			craftmachine_controller.getCraftMachineEntryPointIsActive = getCraftMachineEntryPointIsActive_alwaysDisabled
 
-			#from gui.Scaleform.daapi.view.lobby.hangar.craftmachine_entry_point import CraftMachineEntryPoint
-			#from gui.impl.lobby.craft_machine.craftmachine_entry_point_view import CraftmachineEntryPointView
-			#from gui.impl.gen.view_models.views.lobby.craft_machine.craftmachine_entry_point_view_model import CraftmachineEntryPointViewModel
-			
-			#def disabled_makeInjectView(self):
-			#	_logger.info('Preventing Thunderstorm advert from being shown')
-			#	self.__view = CraftmachineEntryPointView(0)
-			#	return self.__view
-
-			#CraftMachineEntryPoint._makeInjectView = disabled_makeInjectView
-
 			_logger.info('Craftmachine promo have been disabled succesfully')
 		except:
 			_logger.error('Failed to disable Craftmachine')
