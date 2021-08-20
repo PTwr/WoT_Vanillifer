@@ -114,6 +114,8 @@ class VanilliferConfig():
         return self.boolValue('adblock', 'disable_goldfish')
     def disableCraftmachine(self):
         return self.boolValue('adblock', 'disable_craftmachine')
+    def disableMapBox(self):
+        return self.boolValue('adblock', 'disable_mapbox')
 
     def saveConfig(self):
         with open(self.configFile, 'w') as updatedConfig:

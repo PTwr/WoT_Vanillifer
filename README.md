@@ -52,6 +52,7 @@ Settings to remove adverts from garage screen
 Fields
  - ```disable_goldfish```: removes shop offer box (bottom left corner) when set to ```true```, which is by default displayed every 86400 seconds (24 hours) which in practice means on first login of day. "Goldfish" is internal name Wargaming gave to this feature.
  - ```disable_craftmachine```: removes persistent Clan Wars advert (bottom right corner) when set to ```true```. ```Craftmachine``` is internal name Wargaming gave to "build your tank during campaign" feature.
+ - ```disable_mapbox```: removes persistent Recon mode advert (bottom right corner) when set to ```true```. ```Mapbox``` is internal name for Recon mode.
 
 ### [marathon]
 

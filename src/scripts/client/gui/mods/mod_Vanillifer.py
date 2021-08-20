@@ -14,7 +14,7 @@ import nations
 
 
 _logger = logging.getLogger(__name__)
-_logger.info('Vanillifer v1.2.5 - "Thunderstorm"')
+_logger.info('Vanillifer v1.2.6 - "Recon"')
 
 from mod_Vanillifer_Config import VanilliferConfig
 from mod_Vanillifer_Marathon import VanillifyMarathon

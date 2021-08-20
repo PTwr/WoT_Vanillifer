@@ -30,3 +30,17 @@ def AdBlock(_logger, config):
 			_logger.info('Craftmachine promo have been disabled succesfully')
 		except:
 			_logger.error('Failed to disable Craftmachine')
+
+	if config.disableMapBox():
+		try:
+	
+			from gui.impl.lobby.mapbox import mapbox_entry_point_view 
+
+			def mapBoxEntryPointIsActive_alwaysDisabled(craftMachineController=None):
+				return False
+
+			mapbox_entry_point_view.isMapboxEntryPointAvailable = mapBoxEntryPointIsActive_alwaysDisabled
+
+			_logger.info('MapBox promo have been disabled succesfully')
+		except:
+			_logger.error('Failed to disable MapBox')

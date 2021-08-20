@@ -15,6 +15,7 @@ def applyDefaultConfig(_logger, config):
 
     config.setValue('adblock', 'disable_goldfish', 'false')
     config.setValue('adblock', 'disable_craftmachine', 'false')
+    config.setValue('adblock', 'disable_mapbox', 'false')
 
     config.setValue('badges', 'disable', 'true')
     config.setValue('badges', 'ai_bot', 'allow')
