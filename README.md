@@ -53,6 +53,8 @@ Fields
  - ```disable_goldfish```: removes shop offer box (bottom left corner) when set to ```true```, which is by default displayed every 86400 seconds (24 hours) which in practice means on first login of day. "Goldfish" is internal name Wargaming gave to this feature.
  - ```disable_craftmachine```: removes persistent Clan Wars advert (bottom right corner) when set to ```true```. ```Craftmachine``` is internal name Wargaming gave to "build your tank during campaign" feature.
  - ```disable_mapbox```: removes persistent Recon mode advert (bottom right corner) when set to ```true```. ```Mapbox``` is internal name for Recon mode.
+ - ```entrypoint_whitelist_enabled```: enable filtering out garage entrypoints (clickable elements with adverts) not present in ```entrypoint_whitelist```, default value ```true```
+ - ```entrypoint_whitelist```: comma-separated list of allowed garage entrypoints (clickable elements with adverts), default value ```ShopBirthdaySectionEntryPoint, RankedEntryPoint``` (Ranked Battles scoreboard and occasional special shop). List of possible values can be in ```_ENTRY_POINT_ENABLED_VALIDATOR``` dictionary of ```event_entry_points_container.py``` 
 
 ### [marathon]
 
