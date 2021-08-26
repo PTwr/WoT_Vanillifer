@@ -16,6 +16,8 @@ def applyDefaultConfig(_logger, config):
     config.setValue('adblock', 'disable_goldfish', 'false')
     config.setValue('adblock', 'disable_craftmachine', 'false')
     config.setValue('adblock', 'disable_mapbox', 'false')
+    config.setValue('adblock', 'entrypoint_whitelist_enabled', 'true')
+    config.setValue('adblock', 'entrypoint_whitelist', 'ShopBirthdaySectionEntryPoint, RankedEntryPoint')
 
     config.setValue('badges', 'disable', 'true')
     config.setValue('badges', 'ai_bot', 'allow')

@@ -76,6 +76,11 @@ class VanilliferConfig():
         self.ensureSectionExists('originalStyles')
         self.ensureSectionExists('originalPaints')
 
+    def stringListValue(self, section, field):
+        rawList = self.tryGetValue(section, field, default = '')
+        result = [x.strip() for x in rawList.split(',')]
+        return result
+
     def boolValue(self, section, field):
       return self.tryGetValue(section, field, default = 'false').lower() == "true"
     def tryGetValue(self, section, field, default = None, saveDefault = False):
@@ -116,6 +121,10 @@ class VanilliferConfig():
         return self.boolValue('adblock', 'disable_craftmachine')
     def disableMapBox(self):
         return self.boolValue('adblock', 'disable_mapbox')
+    def adblockWhitelistEnabled(self):
+        return self.boolValue('adblock', 'entrypoint_whitelist_enabled')
+    def adblockWhitelist(self):
+        return self.stringListValue('adblock', 'entrypoint_whitelist')
 
     def saveConfig(self):
         with open(self.configFile, 'w') as updatedConfig:
